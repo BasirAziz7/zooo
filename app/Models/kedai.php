@@ -14,8 +14,8 @@ class Kedai extends Model
         return $this->hasMany(Pembelian::class);
     }
 
-    public function kedais() 
+    public function haiwan() 
     {
-        return $this->hasMany(Kedai::class);
+        return $this->hasMany(Haiwan::class);
     }
 }

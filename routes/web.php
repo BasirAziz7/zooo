@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HaiwanController;
+use App\Http\Controllers\FailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-use App\Http\Controllers\HaiwanController;
-Route::resource('haiwans', HaiwanController::class);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
+Route::resource('haiwans',HaiwanController::class);
+
+Route::resource('fails',FailController::class);

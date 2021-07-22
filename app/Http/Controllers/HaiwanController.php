@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Mail\SudahTambah;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
 use App\Models\haiwan;
 use Illuminate\Http\Request;
 
@@ -14,9 +16,14 @@ class HaiwanController extends Controller
      */
     public function index()
     {
+
+        $response = Http::get('https://swapi.dev/api/starships/?page=1');
+        $response_json = $response->json();
+        
         $haiwans = Haiwan::all();
         return view('haiwan.index',[
-            'haiwans'=> $haiwans
+            'haiwans'=> $haiwans,
+            'dataAPI'=> $response_json['results']
         ]);
     }
 
@@ -53,6 +60,8 @@ class HaiwanController extends Controller
        
         
         $haiwan->save(); 
+        $recipient=["basiraziz7@gmail.com"];
+        Mail::to($recipient)->send(new SudahTambah());
         return redirect('/haiwans');
     }
 
